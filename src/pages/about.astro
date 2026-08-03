@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<!--
+  Placeholder personal info below (Name/Email/Education/Skills) —
+  replace with real content.
+-->
+<Layout title="about · alome" description="About this site and its author.">
+  <h1>About</h1>
+  <p>
+    This is a personal website — a blog and portfolio styled as a terminal
+    interface. It's built with Astro, compiled to static HTML with no
+    client-side JavaScript runtime, and hosted on S3 + CloudFront.
+  </p>
+  <p>
+    Posts are written in Markdown/MDX, with syntax highlighting via Shiki and
+    math typesetting via KaTeX, both rendered fully at build time.
+  </p>
+
+  <div class="fastfetch">
+    <div class="fastfetch-logo" aria-hidden="true">
+   ┌─────────┐
+   │  ◕   ◕  │
+   │    ‿    │
+   └─────────┘
+    </div>
+    <dl class="fastfetch-info">
+      <div>
+        <dt>Name:</dt>
+        <dd>Your Name</dd>
+      </div>
+      <div>
+        <dt>Email:</dt>
+        <dd>your@email.example</dd>
+      </div>
+      <div>
+        <dt>Education:</dt>
+        <dd>Your Education</dd>
+      </div>
+      <div>
+        <dt>Skills:</dt>
+        <dd>Skill One, Skill Two, Skill Three</dd>
+      </div>
+    </dl>
+  </div>
+</Layout>

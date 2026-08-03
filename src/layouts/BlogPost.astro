@@ -1,0 +1,39 @@
+---
+import "katex/dist/katex.min.css";
+import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, date, updated, tags } = post.data;
+
+const dateFormatted = date.toISOString().slice(0, 10);
+const updatedFormatted = updated ? updated.toISOString().slice(0, 10) : null;
+---
+
+<Layout title={`${title} · alome`} description={description}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p class="muted">
+        <time datetime={date.toISOString()}>{dateFormatted}</time>
+        {updated && (
+          <>
+            {" "}
+            &mdash; updated <time datetime={updated.toISOString()}>{updatedFormatted}</time>
+          </>
+        )}
+        {tags.length > 0 && (
+          <>
+            {" "}
+            &mdash; {tags.join(", ")}
+          </>
+        )}
+      </p>
+    </header>
+    <slot />
+  </article>
+</Layout>

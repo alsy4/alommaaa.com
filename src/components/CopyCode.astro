@@ -1,0 +1,45 @@
+<!--
+  Injects a "copy" button into every Shiki-rendered code block.
+  This is the one place client-side JS is used on this site: clipboard
+  access is not achievable from static HTML alone. Plain vanilla JS,
+  no framework/island runtime.
+-->
+<script>
+  function initCopyButtons() {
+    const blocks = document.querySelectorAll<HTMLPreElement>("pre.astro-code");
+
+    blocks.forEach((pre) => {
+      if (pre.querySelector(".copy-button")) return;
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "copy-button";
+      button.textContent = "copy";
+      button.setAttribute("aria-label", "Copy code");
+
+      button.addEventListener("click", async () => {
+        const code = pre.querySelector("code");
+        if (!code) return;
+        const text = code.textContent ?? "";
+
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = "copied";
+          button.setAttribute("aria-label", "Copied");
+        } catch {
+          button.textContent = "error";
+          button.setAttribute("aria-label", "Copy failed");
+        }
+
+        window.setTimeout(() => {
+          button.textContent = "copy";
+          button.setAttribute("aria-label", "Copy code");
+        }, 1500);
+      });
+
+      pre.appendChild(button);
+    });
+  }
+
+  initCopyButtons();
+</script>
