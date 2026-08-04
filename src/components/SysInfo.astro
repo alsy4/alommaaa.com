@@ -49,7 +49,8 @@ const socialLinks = [
     label: "AWS Certification",
     href: "https://www.credly.com/badges/8a31ad76-f2aa-4028-9a2f-beb625a4fd39/linked_in_profile",
     color: "#FF9900",
-    icon: `<path d="M2.5 11c3.2 4 12.6 4 15.6 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M14.5 8l3.5 2-2 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>`,
+    viewBox: "0 0 40 22",
+    icon: `<text x="0" y="15" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800" fill="currentColor">aws</text><path d="M1 19c8 5 25 5 33 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M29 15.5l5 3-2.2 4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`,
   },
   {
     label: "Email",
@@ -101,7 +102,7 @@ const socialLinks = [
       <!-- Social / Certification Links -->
       <div class="grid grid-cols-3 gap-2 pt-4">
         <span></span>
-        <div class="col-span-2 flex gap-3">
+        <div class="col-span-2 flex items-center gap-3">
           {socialLinks.map(link => (
             <a
               href={link.mailto ? "#" : link.href}
@@ -116,8 +117,8 @@ const socialLinks = [
               data-d={link.mailto ? link.emailDomain : undefined}
             >
               <svg
-                class="w-4 h-4"
-                viewBox="0 0 20 20"
+                class="h-5 w-auto"
+                viewBox={link.viewBox ?? "0 0 20 20"}
                 fill="currentColor"
                 set:html={link.icon}
               />
