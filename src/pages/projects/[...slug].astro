@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, description, date, status, tags } = project.data;
+const { title, description, date, tags } = project.data;
 const { Content } = await render(project);
 
 const dateFormatted = date.toISOString().slice(0, 10);
@@ -24,15 +24,13 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
 
 <Layout title={`${title} · alome`} description={description}>
   <article>
-    <header>
+    <header class="text-center">
       <h1>{title}</h1>
       <p class="muted">
         <time datetime={date.toISOString()}>{dateFormatted}</time>
-        {" "}&mdash; {status}
         {tags.length > 0 && (
           <>
-            {" "}
-            &mdash; {tags.join(", ")}
+            {" "}| {tags.join(", ")}
           </>
         )}
       </p>

@@ -27,22 +27,25 @@ const postCounts = new Map(
           const count = postCounts.get(project.id) ?? 0;
           return (
             <article class="post-card">
+              {/* 1. Title */}
               <h2>
                 <a href={`/projects/${project.id}/`}>{project.data.title}</a>
               </h2>
+
+              {/* 2. Date | Tags */}
               <p class="muted">
                 <time datetime={project.data.date.toISOString()}>
                   {project.data.date.toISOString().slice(0, 10)}
                 </time>
-                {" "}&mdash; {project.data.status}
                 {project.data.tags.length > 0 && (
                   <>
-                    {" "}
-                    &mdash; {project.data.tags.join(", ")}
+                    {" | "}
+                    {project.data.tags.join(", ")}
                   </>
                 )}
-                {" "}&mdash; {count} {count === 1 ? "post" : "posts"}
               </p>
+
+              {/* 3. Description */}
               <p class="description">{project.data.description}</p>
             </article>
           );
