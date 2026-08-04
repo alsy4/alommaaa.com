@@ -19,7 +19,9 @@ const dateFormatted = date.toISOString().slice(0, 10);
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .filter((post) => post.data.projects.some((p) => p.id === project.id))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.id.localeCompare(b.id),
+  );
 ---
 
 <Layout title={`${title} · alome`} description={description}>
@@ -39,6 +41,5 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
     <Content />
   </article>
 
-  <h2>Posts</h2>
   <PostList posts={posts} />
 </Layout>

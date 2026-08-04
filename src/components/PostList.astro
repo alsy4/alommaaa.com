@@ -9,7 +9,9 @@ const { posts } = Astro.props;
 
 const sorted = [...posts]
   .filter((p) => !p.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.id.localeCompare(b.id),
+  );
 ---
 
 {
