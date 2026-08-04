@@ -7,8 +7,7 @@ draft: false
 ---
 
 Welcome. This is the first post on this site, and it doubles as a smoke test
-for the build pipeline: math rendered by KaTeX, and syntax highlighting
-rendered by Shiki, all compiled to static HTML with no client-side JavaScript.
+for the build pipeline.
 
 ## Math
 
@@ -54,6 +53,3 @@ fn main() {
     println!("hello from rust");
 }
 ```
-
-That's it — if the math above rendered as glyphs (not `$...$` literal text) and
-the code blocks above are colored, the build pipeline is working.
