@@ -9,7 +9,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://alome.me",
+  site: "https://alommaaa.com",
   integrations: [mdx(), sitemap()],
   markdown: {
     processor: unified({
