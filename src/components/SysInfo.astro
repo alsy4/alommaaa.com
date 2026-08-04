@@ -6,7 +6,7 @@ interface Props {
   hostname?: string;
 }
 
-const { username = "developer", hostname = "portfolio" } = Astro.props;
+const { username = "developer", hostname = "aloma" } = Astro.props;
 
 const sysData = [
   { label: "Name", value: "Nik Alimi Syahir Bin Shaari" },
@@ -18,17 +18,52 @@ const sysData = [
   { label: "Skills", value: "AWS / DevOps / Automation / Linux / AIOps" },
 ];
 
-// Custom ASCII logo or text emblem
-const asciiLogo = `
-     /\\
-    /  \\
-   / /\\ \\
-  / /  \\ \\
- / / /\\ \\ \\
-/_/ /  \\ \\_\\
-    \\  /
-     \\/
-`;
+const asciiLogo = [
+  "　　　　　   __",
+  "　　　　 ／フ   フ",
+  "　　　　|  .   .|",
+  "　 　　／`ミ__xノ",
+  "　 　 /　　 　 |",
+  "　　 /　 ヽ　　ﾉ",
+  " 　 │　　 | | |",
+  "／￣|　　 | | |",
+  "| (￣ヽ_ヽ)_)__)",
+  "＼二つ",
+].join("\n");
+
+// Social / certification links (placeholder hrefs — fill in with real URLs)
+const socialLinks = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/nik-alimi-syahir-shaari-404b1a326/",
+    color: "#0A66C2",
+    icon: `<path d="M4.98 3.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM.5 8h4v12h-4V8zm7.5 0h3.8v1.7h.1c.5-1 1.9-2 3.9-2 4.2 0 5 2.8 5 6.3V20h-4v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20h-4V8z"/>`,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/alsy4",
+    color: "#FFFFFF",
+    icon: `<path d="M10 .3a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 10 .3z"/>`,
+  },
+  {
+    label: "AWS Certification",
+    href: "https://www.credly.com/badges/8a31ad76-f2aa-4028-9a2f-beb625a4fd39/linked_in_profile",
+    color: "#FF9900",
+    viewBox: "0 0 40 22",
+    icon: `<text x="0" y="15" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800" fill="currentColor">aws</text><path d="M1 19c8 5 25 5 33 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M29 15.5l5 3-2.2 4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+  {
+    label: "Email",
+    mailto: true,
+    // Encoded so the address never appears as plain text in the built HTML —
+    // assembled client-side by the script below. Defeats basic regex/text
+    // scrapers; not intended as strong cryptographic protection.
+    emailUser: Buffer.from("syahiralimi").toString("base64"),
+    emailDomain: Buffer.from("gmail.com").toString("base64"),
+    color: "var(--accent)",
+    icon: `<rect x="1" y="4" width="18" height="12" rx="1" ry="1" fill="none" stroke="currentColor" stroke-width="1"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+];
 ---
 
 <div class="sysinfo-container text-sm max-w-2xl mx-auto my-8 p-6 bg-[var(--bg)] text-[var(--fg)] rounded border border-[var(--border)]">
@@ -39,13 +74,13 @@ const asciiLogo = `
       <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
       <span class="w-3 h-3 rounded-full bg-[var(--accent)] inline-block"></span>
     </div>
-    <span class="text-xs text-[var(--muted)]">user@{hostname}: ~</span>
+    <span class="text-xs text-[var(--muted)]">user@HOSTNAME: ~</span>
   </div>
 
   <!-- Main Fastfetch Content -->
   <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
     <!-- ASCII Art Side -->
-    <pre class="sm:col-span-4 mx-auto w-fit text-[var(--accent)] font-bold leading-tight select-none text-xs sm:text-sm overflow-x-auto">
+    <pre class="ascii-art sm:col-span-4 mx-auto w-fit text-[var(--accent)] font-bold leading-tight select-none text-xs sm:text-sm overflow-x-auto">
 {asciiLogo}
     </pre>
 
@@ -53,7 +88,7 @@ const asciiLogo = `
     <div class="sm:col-span-8 space-y-1">
       <!-- Title Header: user@host -->
       <div class="text-base font-bold pb-1 mb-2 border-b border-[var(--border)]">
-        <span class="text-[var(--accent)]">{username}</span><span class="text-[var(--muted)]">@</span><span class="text-[var(--accent)]">{hostname}</span>
+        <span class="text-[var(--accent)]">about</span><span class="text-[var(--muted)]">@</span><span class="text-[var(--accent)]">me</span>
       </div>
 
       <!-- Key-Value Pairs -->
@@ -64,17 +99,50 @@ const asciiLogo = `
         </div>
       ))}
 
-      <!-- Fastfetch Color Palette Bar -->
-      <div class="pt-4 flex gap-1">
-        <span class="w-4 h-4 bg-[var(--bg)] rounded-sm border border-[var(--border)]"></span>
-        <span class="w-4 h-4 bg-red-500 rounded-sm"></span>
-        <span class="w-4 h-4 bg-[var(--accent)] rounded-sm"></span>
-        <span class="w-4 h-4 bg-yellow-500 rounded-sm"></span>
-        <span class="w-4 h-4 bg-blue-500 rounded-sm"></span>
-        <span class="w-4 h-4 bg-fuchsia-500 rounded-sm"></span>
-        <span class="w-4 h-4 bg-cyan-500 rounded-sm"></span>
-        <span class="w-4 h-4 bg-[var(--fg)] rounded-sm"></span>
+      <!-- Social / Certification Links -->
+      <div class="grid grid-cols-3 gap-2 pt-4">
+        <span></span>
+        <div class="col-span-2 flex items-center gap-3">
+          {socialLinks.map(link => (
+            <a
+              href={link.mailto ? "#" : link.href}
+              target={link.mailto ? undefined : "_blank"}
+              rel={link.mailto ? undefined : "noopener noreferrer"}
+              aria-label={link.label}
+              title={link.label}
+              style={`color: ${link.color}`}
+              class="opacity-90 hover:opacity-100 transition-opacity"
+              data-email-link={link.mailto ? "" : undefined}
+              data-u={link.mailto ? link.emailUser : undefined}
+              data-d={link.mailto ? link.emailDomain : undefined}
+            >
+              <svg
+                class="h-5 w-auto"
+                viewBox={link.viewBox ?? "0 0 20 20"}
+                fill="currentColor"
+                set:html={link.icon}
+              />
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function initEmailLink() {
+    const links = document.querySelectorAll<HTMLAnchorElement>("[data-email-link]");
+
+    links.forEach((link) => {
+      const { u, d } = link.dataset;
+      if (!u || !d) return;
+
+      const user = atob(u);
+      const domain = atob(d);
+      link.href = `mailto:${user}@${domain}`;
+    });
+  }
+
+  initEmailLink();
+</script>
