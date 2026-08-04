@@ -40,6 +40,18 @@ variable "github_branch" {
   default     = "main"
 }
 
+variable "github_owner_id" {
+  description = "Numeric GitHub owner (user/org) ID, from the OIDC sub claim."
+  type        = string
+  default     = "44989969"
+}
+
+variable "github_repo_id" {
+  description = "Numeric GitHub repository ID, from the OIDC sub claim."
+  type        = string
+  default     = "1322331341"
+}
+
 variable "cloudfront_price_class" {
   description = "CloudFront price class. PriceClass_100 covers North America and Europe edge locations only, cheapest option."
   type        = string
