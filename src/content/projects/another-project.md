@@ -17,5 +17,3 @@ The "Hello, World" post is linked to both this project and "Sample
 Project" to verify that a post correctly lists all of its associated
 projects, and that each project's post list resolves correctly at
 build time.
-
-HAHAH
