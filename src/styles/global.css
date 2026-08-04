@@ -44,6 +44,8 @@ footer {
 }
 
 header {
+  display: flex;
+  justify-content: center;
   padding-block: 1.25rem;
   border-bottom: 1px solid var(--border);
 }
@@ -126,6 +128,20 @@ pre {
   border: 1px solid var(--border);
   border-radius: 4px;
   line-height: 1.5;
+}
+
+/* Language label read from Shiki's data-language attribute — no client JS needed */
+pre.astro-code[data-language]:not([data-language="plaintext"])::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.55;
+  pointer-events: none;
 }
 
 :not(pre) > code {
