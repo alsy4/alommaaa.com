@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import { unified } from "@astrojs/markdown-remark";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,5 +17,8 @@ export default defineConfig({
       rehypePlugins: [rehypeKatex],
     }),
     shikiConfig: { theme: "vitesse-dark" },
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
 });

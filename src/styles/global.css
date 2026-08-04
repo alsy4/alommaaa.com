@@ -1,6 +1,8 @@
 /* Terminal/Unix-styled global stylesheet.
    Dark-first, monospace, minimal chrome, high legibility. */
 
+@import "tailwindcss";
+
 :root {
   --bg: #0d0f10;
   --fg: #d4d4d4;
@@ -133,6 +135,13 @@ pre {
   border-radius: 3px;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
 blockquote {
   margin-inline: 0;
   padding-inline-start: 1rem;
@@ -219,53 +228,5 @@ td {
 }
 
 .post-card .description {
-  color: var(--fg);
-}
-
-/* About page: fastfetch-style personal-info layout (see about.astro) */
-.fastfetch {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 2rem;
-  margin-block: 2rem;
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
-
-.fastfetch-logo {
-  flex-shrink: 0;
-  margin: 0;
-  color: var(--accent);
-  white-space: pre;
-  line-height: 1.3;
-}
-
-.fastfetch-info {
-  flex: 1 1 16rem;
-  min-width: 0;
-  margin: 0;
-}
-
-.fastfetch-info div {
-  display: flex;
-  gap: 0.5rem;
-  padding-block: 0.3rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.fastfetch-info div:last-child {
-  border-bottom: none;
-}
-
-.fastfetch-info dt {
-  min-width: 6rem;
-  color: var(--muted);
-  font-weight: normal;
-}
-
-.fastfetch-info dd {
-  margin: 0;
   color: var(--fg);
 }

@@ -1,0 +1,80 @@
+---
+// src/components/SysInfo.astro
+
+interface Props {
+  username?: string;
+  hostname?: string;
+}
+
+const { username = "developer", hostname = "portfolio" } = Astro.props;
+
+const sysData = [
+  { label: "Name", value: "Nik Alimi Syahir Bin Shaari" },
+  { label: "Experience", value: "Digital Transformation Team | RHB Banking Berhad" },
+  { label: "", value: "Deployment Management | epiGenesys" },
+  { label: "Education", value: "The University of Sheffield | BSc Computer Science \n | First Class Honours"  },
+  { label: "", value: "Kolej Mara Banting | International Baccalareate" },
+  { label: "Languages", value: "Java (Spring Boot) | Ruby (Ruby on Rails) | Python (FastAPI) | Bash | SQL" },
+  { label: "Skills", value: "AWS / DevOps / Automation / Linux / AIOps" },
+];
+
+// Custom ASCII logo or text emblem
+const asciiLogo = `
+     /\\
+    /  \\
+   / /\\ \\
+  / /  \\ \\
+ / / /\\ \\ \\
+/_/ /  \\ \\_\\
+    \\  /
+     \\/
+`;
+---
+
+<div class="sysinfo-container text-sm max-w-2xl mx-auto my-8 p-6 bg-[var(--bg)] text-[var(--fg)] rounded">
+  <!-- Terminal Header Bar -->
+  <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--border)]">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+      <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+      <span class="w-3 h-3 rounded-full bg-[var(--accent)] inline-block"></span>
+    </div>
+    <span class="text-xs text-[var(--muted)]">user@{hostname}: ~</span>
+  </div>
+
+  <!-- Main Fastfetch Content -->
+  <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+    <!-- ASCII Art Side -->
+    <pre class="sm:col-span-4 mx-auto w-fit text-[var(--accent)] font-bold leading-tight select-none text-xs sm:text-sm overflow-x-auto">
+{asciiLogo}
+    </pre>
+
+    <!-- System Info Side -->
+    <div class="sm:col-span-8 space-y-1">
+      <!-- Title Header: user@host -->
+      <div class="text-base font-bold pb-1 mb-2 border-b border-[var(--border)]">
+        <span class="text-[var(--accent)]">{username}</span><span class="text-[var(--muted)]">@</span><span class="text-[var(--accent)]">{hostname}</span>
+      </div>
+
+      <!-- Key-Value Pairs -->
+      {sysData.map(item => (
+        <div class="grid grid-cols-3 gap-2">
+          <span class="text-[var(--accent)] font-bold">{item.label}</span>
+          <span class="col-span-2 text-[var(--fg)]">{item.value}</span>
+        </div>
+      ))}
+
+      <!-- Fastfetch Color Palette Bar -->
+      <div class="pt-4 flex gap-1">
+        <span class="w-4 h-4 bg-[var(--bg)] rounded-sm border border-[var(--border)]"></span>
+        <span class="w-4 h-4 bg-red-500 rounded-sm"></span>
+        <span class="w-4 h-4 bg-[var(--accent)] rounded-sm"></span>
+        <span class="w-4 h-4 bg-yellow-500 rounded-sm"></span>
+        <span class="w-4 h-4 bg-blue-500 rounded-sm"></span>
+        <span class="w-4 h-4 bg-fuchsia-500 rounded-sm"></span>
+        <span class="w-4 h-4 bg-cyan-500 rounded-sm"></span>
+        <span class="w-4 h-4 bg-[var(--fg)] rounded-sm"></span>
+      </div>
+    </div>
+  </div>
+</div>

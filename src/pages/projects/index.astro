@@ -1,0 +1,53 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+const postCounts = new Map(
+  projects.map((project) => [
+    project.id,
+    posts.filter((post) => post.data.projects.some((p) => p.id === project.id)).length,
+  ]),
+);
+---
+
+<Layout title="projects · alome" description="Projects — personal site.">
+  <h1>Projects</h1>
+  {
+    projects.length === 0 ? (
+      <p class="muted">No projects yet.</p>
+    ) : (
+      <div class="post-feed">
+        {projects.map((project) => {
+          const count = postCounts.get(project.id) ?? 0;
+          return (
+            <article class="post-card">
+              <h2>
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <p class="muted">
+                <time datetime={project.data.date.toISOString()}>
+                  {project.data.date.toISOString().slice(0, 10)}
+                </time>
+                {" "}&mdash; {project.data.status}
+                {project.data.tags.length > 0 && (
+                  <>
+                    {" "}
+                    &mdash; {project.data.tags.join(", ")}
+                  </>
+                )}
+                {" "}&mdash; {count} {count === 1 ? "post" : "posts"}
+              </p>
+              <p class="description">{project.data.description}</p>
+            </article>
+          );
+        })}
+      </div>
+    )
+  }
+</Layout>

@@ -1,9 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SysInfo from "../components/SysInfo.astro";
 ---
 
 <!--
-  Placeholder personal info below (Name/Email/Education/Skills) —
+  Placeholder sysinfo values below (see SysInfo.astro) —
   replace with real content.
 -->
 <Layout title="about · alome" description="About this site and its author.">
@@ -18,30 +19,5 @@ import Layout from "../layouts/Layout.astro";
     math typesetting via KaTeX, both rendered fully at build time.
   </p>
 
-  <div class="fastfetch">
-    <div class="fastfetch-logo" aria-hidden="true">
-   ┌─────────┐
-   │  ◕   ◕  │
-   │    ‿    │
-   └─────────┘
-    </div>
-    <dl class="fastfetch-info">
-      <div>
-        <dt>Name:</dt>
-        <dd>Your Name</dd>
-      </div>
-      <div>
-        <dt>Email:</dt>
-        <dd>your@email.example</dd>
-      </div>
-      <div>
-        <dt>Education:</dt>
-        <dd>Your Education</dd>
-      </div>
-      <div>
-        <dt>Skills:</dt>
-        <dd>Skill One, Skill Two, Skill Three</dd>
-      </div>
-    </dl>
-  </div>
+  <SysInfo />
 </Layout>
