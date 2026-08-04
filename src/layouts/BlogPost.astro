@@ -1,6 +1,7 @@
 ---
 import "katex/dist/katex.min.css";
 import Layout from "./Layout.astro";
+import { getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -12,6 +13,10 @@ const { title, description, date, updated, tags } = post.data;
 
 const dateFormatted = date.toISOString().slice(0, 10);
 const updatedFormatted = updated ? updated.toISOString().slice(0, 10) : null;
+
+const projects = (
+  await Promise.all(post.data.projects.map((p) => getEntry(p)))
+).filter((p) => p !== undefined);
 ---
 
 <Layout title={`${title} · alome`} description={description}>
@@ -33,6 +38,17 @@ const updatedFormatted = updated ? updated.toISOString().slice(0, 10) : null;
           </>
         )}
       </p>
+      {projects.length > 0 && (
+        <p class="muted">
+          Part of project(s):{" "}
+          {projects.map((project, i) => (
+            <>
+              {i > 0 && ", "}
+              <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+            </>
+          ))}
+        </p>
+      )}
     </header>
     <slot />
   </article>

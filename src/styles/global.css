@@ -135,6 +135,13 @@ pre {
   border-radius: 3px;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
 blockquote {
   margin-inline: 0;
   padding-inline-start: 1rem;
