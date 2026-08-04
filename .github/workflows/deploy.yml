@@ -2,9 +2,8 @@ name: Deploy
 
 on:
   push:
-    branches: 
+    branches:
       - main
-      - terraform-deploy
   workflow_dispatch: {}
 
 permissions:
