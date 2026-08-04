@@ -12,8 +12,7 @@ const sysData = [
   { label: "Name", value: "Nik Alimi Syahir Bin Shaari" },
   { label: "Experience", value: "Digital Transformation Team | RHB Banking Berhad" },
   { label: "", value: "Deployment Management | epiGenesys" },
-  { label: "Education", value: "The University of Sheffield | BSc Computer Science" },
-  { label: "", value: "First Class Honours" },
+  { label: "Education", value: "The University of Sheffield | BSc Computer Science \n | First Class Honours"  },
   { label: "", value: "Kolej Mara Banting | International Baccalareate" },
   { label: "Languages", value: "Java (Spring Boot) | Ruby (Ruby on Rails) | Python (FastAPI) | Bash | SQL" },
   { label: "Skills", value: "AWS / DevOps / Automation / Linux / AIOps" },
@@ -60,7 +59,7 @@ const asciiLogo = `
       <!-- Key-Value Pairs -->
       {sysData.map(item => (
         <div class="grid grid-cols-3 gap-2">
-          <span class="text-[var(--accent)] font-bold">{item.label}:</span>
+          <span class="text-[var(--accent)] font-bold">{item.label}</span>
           <span class="col-span-2 text-[var(--fg)]">{item.value}</span>
         </div>
       ))}
