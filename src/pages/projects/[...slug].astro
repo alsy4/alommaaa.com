@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostList from "../../components/PostList.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { title, description, date, status, tags } = project.data;
+const { Content } = await render(project);
+
+const dateFormatted = date.toISOString().slice(0, 10);
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .filter((post) => post.data.projects.some((p) => p.id === project.id))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title={`${title} · alome`} description={description}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p class="muted">
+        <time datetime={date.toISOString()}>{dateFormatted}</time>
+        {" "}&mdash; {status}
+        {tags.length > 0 && (
+          <>
+            {" "}
+            &mdash; {tags.join(", ")}
+          </>
+        )}
+      </p>
+      <p>{description}</p>
+    </header>
+    <Content />
+  </article>
+
+  <h2>Posts</h2>
+  <PostList posts={posts} />
+</Layout>
