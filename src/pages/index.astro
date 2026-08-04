@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 ---
 
-<Layout title="alome" description="Personal site — blog and portfolio.">
+<Layout title="blogs" description="Personal site — blog and portfolio.">
   <h1>Posts</h1>
   <PostList posts={posts} />
 </Layout>
