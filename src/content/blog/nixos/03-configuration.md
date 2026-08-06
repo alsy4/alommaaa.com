@@ -174,6 +174,7 @@ new machine is copy `configuration.nix`, swap in a fresh
 `hardware-configuration.nix` for the new hardware, rebuild. Same system,
 different box.
 
+This is a complete setup and you can use Nix as it is. But, there's more of a Nix than this.
 Next post is probably home-manager, since `systemPackages` covers the
 system but says nothing about dotfiles or per-user tooling, and that gap
 is the next thing worth solving.

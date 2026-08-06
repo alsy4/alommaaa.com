@@ -1,7 +1,7 @@
 ---
 title: "NixOS" 
 description: "Guide / tips and tricks on NixOS"
-date: 2026-04-08
+date: 2026-08-03
 status: "active"
 draft: false
 ---

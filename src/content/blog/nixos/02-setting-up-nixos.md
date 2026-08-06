@@ -287,7 +287,10 @@ sudo efibootmgr -b XXXX -B
 
 (swap `XXXX` for that number), and Arch is fully gone, both from disk and from your firmware's memory. Fedora's own files, on the other hand, were never touched through any of this. That's the entire point of being careful about which partition we formatted back in step 1.
 
+
 Welcome to NixOS. If any of `configuration.nix` still feels unfamiliar, don't worry, that's genuinely a whole topic on its own, and one I'll get into in a future post.
+
+![Happy](https://media1.tenor.com/m/uo6y8vuwoZIAAAAC/happy-happy-happy.gif)
 
 References:
 [NixOS Manual](https://nixos.org/manual/nixos/stable/#sec-installation) \

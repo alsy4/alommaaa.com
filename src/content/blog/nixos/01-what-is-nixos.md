@@ -1,6 +1,6 @@
 ---
 title: "What is NixOS"
-date: 2026-08-04
+date: 2026-08-03
 description: "What NixOS actually is, and why I switched to it"
 tags: ["linux"]
 draft: false
@@ -76,4 +76,4 @@ Still. Once the config's actually written, you end up with a system that's
 version controlled, portable, and boring in the best way. After years of
 distro hopping that's exactly what I was after.
 
-Next post: actually installing this thing.
+[Next post](/blog/nixos/02-setting-up-nixos): actually installing this thing.
