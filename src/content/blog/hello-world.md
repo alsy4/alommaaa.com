@@ -3,7 +3,7 @@ title: "Hello, World"
 date: 2026-08-04
 description: "First post — a quick tour of what this site can render at build time."
 tags: ["meta"]
-draft: false
+draft: true
 ---
 
 Welcome. This is the first post on this site, and it doubles as a smoke test

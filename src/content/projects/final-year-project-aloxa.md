@@ -12,7 +12,7 @@ Although I submitted my Final Year Project 3 months ago and received the feeback
 > "*Let nostalgia be the death of me*"
 
 </div>
-.
+
 
 P/S I got 78.
 
