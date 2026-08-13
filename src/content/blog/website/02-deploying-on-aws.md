@@ -17,32 +17,6 @@ because I want to work in cloud infrastructure, and "I clicked deploy on
 Vercel" is not a thing you put on a CV. Every piece below is something I'd
 have to understand anyway.
 
-## The shape of it
-
-Four services, each doing one job:
-
-```mermaid
-graph TD
-    Browser["browser"] --> Route53["Route 53"]
-    Route53 --> CloudFront["CloudFront"]
-    CloudFront --> S3["S3"]
-    ACM["ACM"] -.-> CloudFront
-
-    Route53 --- R53Note["DNS. alommaaa.com to the CloudFront distribution"]
-    CloudFront --- CFNote["CDN. caches at edge locations, terminates TLS"]
-    S3 --- S3Note["the actual files. private, no public access"]
-    ACM --- ACMNote["the TLS certificate CloudFront presents"]
-
-    linkStyle 4,5,6,7 stroke:none
-    style R53Note fill:none,stroke:none
-    style CFNote fill:none,stroke:none
-    style S3Note fill:none,stroke:none
-    style ACMNote fill:none,stroke:none
-```
-
-The browser only ever talks to CloudFront. It never touches S3 directly,
-and that's deliberate.
-
 ## S3
 
 S3 is object storage. Buckets and keys, not really a filesystem, though it
