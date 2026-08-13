@@ -91,32 +91,9 @@ credentials that expire in an hour.
 
 Nothing is stored. There is no key to leak.
 
-The workflow side is two things. First, permission to request a token:
+Is it secured enough?
 
-```yaml
-permissions:
-  contents: read
-  id-token: write
-```
-
-`id-token: write` is what allows the job to ask GitHub for an OIDC token.
-Leave it out and the credentials step fails with an error that does not
-obviously point at this. `contents: read` is there because once you declare
-a `permissions` block you're setting the whole thing explicitly, and the job
-still needs to check out the repo.
-
-Then the step itself:
-
-```yaml
-- name: Configure AWS credentials
-  uses: aws-actions/configure-aws-credentials@v4
-  with:
-    role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
-    aws-region: ${{ secrets.AWS_REGION }}
-```
-
-No access key. No secret key. A role ARN and a region, and the action does
-the token exchange.
+Maybe
 
 ### The trust policy is where it gets strict
 
@@ -142,14 +119,9 @@ means:
   open a workflow that grabs my credentials
 - getting the condition wrong fails closed, not open
 
-Note the numeric IDs in there. GitHub's default subject claim uses the repo
-*name*, which is a problem: rename the repo, or delete it and let someone
-else register the same `owner/repo` string, and a policy pinned to the name
-follows the string rather than the thing. Numeric owner and repository IDs
-are immutable and never reused. Pinning to those closes that hole.
 
 Using this format does require configuring the subject claim template on the
-GitHub side. If you're on the default, the claim looks like
+GitHub side. If it's on the default, the claim looks like
 `repo:owner/repo:ref:refs/heads/main` and you pin that instead.
 
 ### The role can do almost nothing
@@ -285,52 +257,6 @@ leaves the site in a state where the files are correct and what people see
 isn't. Anything that must happen every single time belongs in the automation,
 not in your memory of how the automation works.
 
-### The more surgical version
-
-Worth knowing about even though I'm not doing it.
-
-Astro fingerprints its built assets, so a CSS file comes out as something
-like `/_astro/index.a1b2c3d4.css`. Change the file and the hash changes,
-which means the URL changes, which means it's a different object as far as
-the cache is concerned. Fingerprinted assets never need invalidating at all,
-because a stale cache entry for an old hash simply stops being requested.
-
-Only the unfingerprinted entry points, the HTML, the sitemap, `robots.txt`,
-actually need it. The tuned setup is:
-
-- sync `/_astro/*` with `--cache-control "public,max-age=31536000,immutable"`
-  so edges hold it for a year
-- sync the HTML with a short max-age
-- invalidate only `/*.html` and the handful of root files
-
-That's two sync commands and a narrower invalidation, for a site where `/*`
-already costs nothing. I'd do it if traffic ever made the origin fetches
-matter. Right now it's complexity in exchange for nothing measurable.
-
-## What I'd still like to add
-
-Being honest about what isn't there.
-
-`npm run check` doesn't run in CI. Astro's type checking is a script in
-`package.json` and it should be a step in this workflow before the build, so
-type errors fail the pipeline rather than getting noticed later.
-
-No preview deploys. A pull request doesn't get its own URL to look at, so
-layout changes get verified locally and then pushed with fingers crossed.
-
-The invalidation isn't waited on. `create-invalidation` returns as soon as
-the request is accepted, and propagation takes a few minutes after that. The
-job goes green before the caches are actually clear. There's a `--wait` flag
-that would hold the step open until it completes. Not adding it is a
-deliberate trade, since the deploy is done at that point and waiting just
-burns runner minutes, but it does mean "green" means "submitted" rather than
-"finished".
-
-And the stored secrets aren't really secrets. Role ARN, bucket name,
-distribution ID and region are identifiers rather than credentials, and none
-of them grants access on its own. They'd be more accurately stored as
-repository *variables*. Keeping them as secrets costs nothing and keeps my
-account ID out of public workflow logs, which is why they're there.
 
 ## Where that leaves it
 
@@ -343,5 +269,6 @@ Ninety seconds later it's on a CDN, on my domain, over TLS, out of a bucket
 nobody can read directly, with the cache cleared, using credentials that
 expired before I finished making tea.
 
-Which is roughly what I wanted when I started: the writing is the hard part
+Which is roughly what I wanted when I started: the writing and choosing which `.gif` to include is the hard part
 again, and nothing else is.
+

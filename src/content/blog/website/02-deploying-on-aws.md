@@ -185,6 +185,7 @@ output "route53_nameservers" {
 ## What this costs
 
 Roughly nothing, which was one of the goals.
+![Nothing](https://media.tenor.com/0Zh4sRr2iYgAAAAi/basically-nothing-derek-muller.gif)
 
 - **CloudFront**: 1 TB out and 10 million requests per month, free, and it
   doesn't expire after twelve months like most of the free tier. A text site
@@ -193,7 +194,7 @@ Roughly nothing, which was one of the goals.
   Because CloudFront sits in front, S3 barely gets read at all.
 - **Route 53**: $0.50/month for the hosted zone. This is the only line item
   that reliably shows up.
-- **ACM**: free.
+- **ACM**: free lol.
 
 ## Doing this by hand is miserable
 

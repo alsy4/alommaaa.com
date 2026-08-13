@@ -8,9 +8,7 @@ projects:
   - alome-website
 ---
 
-I had the AWS setup from the last post working through the console. Bucket
-made, distribution made, cert validated, DNS pointed. It served the site
-fine.
+I had the AWS setup from the last post working through the console. From the storage to the DNS.
 
 Then I went to change one thing and realised I could not remember which of
 the five services I needed to touch, or why I'd set half the options the way
@@ -37,6 +35,8 @@ loop: **declare desired state, converge on it, repeat.**
 
 Once that clicks in one place you start wanting it everywhere.
 
+![One-Click](https://media1.tenor.com/m/iGHgTuJMdSEAAAAC/mouse-left-click.gif)
+
 ## So why Terraform specifically
 
 A few reasons, in the order I actually felt them.
@@ -58,9 +58,8 @@ Look at what has to happen for this stack to come up:
    in the `SourceArn` condition.
 6. The distribution has to exist before Route 53 can alias to it.
 
-Six steps, strict order, and step 3 to 4 involves waiting on something
-outside your control. Get it wrong in the console and the error doesn't
-explain the ordering.
+Six steps in this specific order, and step 3 to 4 involves waiting on something
+outside your control. Get it wrong and you might better off giving up at this time.
 
 I never wrote that sequence down anywhere. Terraform derives it from the
 fact that `cloudfront.tf` references
@@ -184,7 +183,7 @@ built once is now a template.
 The less romantic reason. Terraform is the industry default for this, and
 being able to read someone else's modules and explain why a resource is laid
 out the way it is is a directly employable skill. Every hour spent on this
-is an hour spent on something that transfers.
+is an hour spent on something that transfers. So recruiters, please hire me.
 
 ## How the files are laid out
 
