@@ -53,7 +53,7 @@ variable "github_repo_id" {
 }
 
 variable "cloudfront_price_class" {
-  description = "CloudFront price class. PriceClass_100 covers North America and Europe edge locations only, cheapest option."
+  description = "CloudFront price class. PriceClass_All uses every edge location worldwide; PriceClass_200 drops South America and Oceania; PriceClass_100 is North America and Europe only, cheapest option."
   type        = string
-  default     = "PriceClass_100"
+  default     = "PriceClass_All"
 }
