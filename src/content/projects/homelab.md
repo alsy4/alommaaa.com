@@ -1,7 +1,7 @@
 ---
 title: "Homelab"
 description: "Two second-hand machines, a Raspberry Pi and a dying laptop, turned into a k3s cluster"
-date: 2026-08-16
+date: 2026-08-13
 status: "active"
 draft: false
 ---

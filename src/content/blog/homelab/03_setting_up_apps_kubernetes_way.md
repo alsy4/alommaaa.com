@@ -1,6 +1,6 @@
 ---
 title: Putting the Apps Back
-date: 2026-08-21
+date: 2026-08-20
 description: Deployments, DaemonSets, and learning what mixed CPU architectures do to your manifests
 tags:
   - homelab
