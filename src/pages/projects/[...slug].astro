@@ -19,9 +19,14 @@ const dateFormatted = date.toISOString().slice(0, 10);
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .filter((post) => post.data.projects.some((p) => p.id === project.id))
-  .sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.id.localeCompare(b.id),
-  );
+  .flatMap((post) => {
+    // File name must start with a numbering prefix (e.g. "01-" or "01_") to
+    // place it in the series — undated/unnumbered posts are dropped.
+    const match = post.id.split("/").pop()?.match(/^\d+/);
+    return match ? [{ post, order: Number(match[0]) }] : [];
+  })
+  .sort((a, b) => a.order - b.order)
+  .map(({ post }) => post);
 ---
 
 <Layout title={`${title} · alome`} description={description}>
@@ -41,5 +46,5 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
     <Content />
   </article>
 
-  <PostList posts={posts} />
+  <PostList posts={posts} sortByDate={false} />
 </Layout>

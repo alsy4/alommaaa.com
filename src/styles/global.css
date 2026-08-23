@@ -10,10 +10,27 @@
   --muted: #8a8f93;
   --border: #2a2e31;
 
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  /* Heading ramp. Colour and size both carry the hierarchy. Hues follow the
+     ANSI-16 terminal palette, desaturated to sit alongside --accent. All are
+     >=7:1 against --bg (AAA). */
+  --h1: #e8a3a3; /* pastel red    — page/post title  */
+  --h2: #7fdba7; /* green         — same as --accent */
+  --h3: #86b8e8; /* blue                             */
+  --h4: #d9b073; /* amber                            */
+  --h5: #c49bd8; /* magenta                          */
+  --h6: #9aa0a5; /* grey          — near --muted     */
+
+  --font-mono: "Source Code Pro", ui-monospace, "SF Mono", "JetBrains Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
 
   --measure: 76ch;
+
+  /* Vertical rhythm. Tailwind's preflight zeroes every margin, so each block
+     in prose must re-declare its own or it sits flush against what precedes
+     it. */
+  --block-gap: 1rem; /* between two consecutive prose blocks */
+  --heading-gap: 2.5rem; /* above a heading */
+  --heading-lead: 0.75rem; /* below a heading, binding it to its content */
 }
 
 * {
@@ -74,24 +91,67 @@ article > header {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
+  display: block;
   line-height: 1.3;
-  color: var(--fg);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 4px;
+  /* Dim rule under the text so a coloured heading never reads as a link —
+     links keep their accent-coloured underline. */
+  text-decoration-color: var(--border);
 }
 
+h1,
 h2,
 h3,
-h4 {
-  margin-top: 2.5rem;
+h4,
+h5,
+h6 {
+  margin-top: var(--heading-gap);
+}
+
+/* Bind a heading to the block it introduces. Applied to the next element
+   rather than as the heading's own margin-bottom, so adjacent-margin
+   collapsing can't quietly widen it back to --block-gap. */
+:is(h1, h2, h3, h4, h5, h6) + * {
+  margin-top: var(--heading-lead);
+}
+
+h1 { color: var(--h1); font-size: 2rem; }
+
+/* The post/project title is the page's own name, not structural content —
+   exclude it from the heading color ramp. */
+article > header > h1 {
+  color: var(--fg);
+}
+h2 { color: var(--h2); font-size: 1.6rem; }
+h3 { color: var(--h3); font-size: 1.3rem; }
+h4 { color: var(--h4); font-size: 1.1rem; }
+h5 { color: var(--h5); font-size: 0.95rem; }
+h6 { color: var(--h6); }
+
+/* h6 is deep enough to be a sub-note rather than structure. */
+h5,
+h6 {
+  letter-spacing: 0.02em;
+}
+
+h6 {
+  font-size: 0.85rem;
 }
 
 p,
 ul,
-ol {
-  margin-block: 1rem 0;
+ol,
+pre,
+table,
+blockquote,
+figure,
+details {
+  margin-block: var(--block-gap) 0;
 }
 
 ul,
@@ -158,6 +218,9 @@ pre {
 /* SysInfo's ASCII-art block reuses <pre> for monospace rendering only —
    it isn't a code block, so skip the code-block border/padding chrome. */
 pre.ascii-art {
+  /* Also a grid item in SysInfo, where a block gap would offset it inside its
+     cell — the surrounding grid owns the spacing. */
+  margin-block: 0;
   padding: 0;
   border: none;
   border-radius: 0;
@@ -190,6 +253,100 @@ img {
   max-width: 100%;
   height: auto;
   margin-inline: auto;
+}
+
+/* Lets a single image break out of the prose column (--measure) to render
+   larger, for images that carry more visual detail than the text width
+   allows. Caps at 1000px so it doesn't run edge-to-edge on wide viewports. */
+img.wide {
+  max-width: min(1000px, calc(100vw - 2.5rem));
+  width: 100%;
+  margin-inline: calc(50% - 50vw + 1.25rem);
+}
+
+/* Click-to-zoom lightbox for blog post images (BlogPost.astro). */
+article img.zoomable {
+  cursor: zoom-in;
+}
+
+dialog.lightbox {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+dialog.lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+dialog.lightbox img {
+  display: block;
+  max-width: 95vw;
+  max-height: 95vh;
+  margin: 0 auto;
+  cursor: zoom-out;
+}
+
+/* Table of contents (TableOfContents.astro) — a plain nested bullet list. */
+.toc {
+  margin-block: 0 2.5rem;
+  padding: 0.85rem 1.1rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.toc-title {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.toc ul {
+  margin: 0;
+  padding-inline-start: 1.2rem;
+  list-style: disc;
+}
+
+.toc ul ul {
+  list-style: circle;
+}
+
+.toc li {
+  margin-block: 0.15rem;
+}
+
+.toc li::marker {
+  color: var(--muted);
+}
+
+.toc a {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+/* Entries take the colour of the heading level they point at, so the contents
+   box and the page body read as one system. */
+.toc li[data-depth="2"] > a {
+  color: var(--h2);
+}
+
+.toc li[data-depth="3"] > a {
+  color: var(--h3);
+}
+
+.toc li[data-depth="4"] > a {
+  color: var(--h4);
+}
+
+.toc a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 blockquote {
@@ -266,6 +423,7 @@ td {
 }
 
 .post-card h2 a {
+  color: var(--accent);
   text-decoration: none;
 }
 

@@ -3,15 +3,19 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   posts: CollectionEntry<"blog">[];
+  /** Re-sort by date descending. Set false when the caller has already
+   * ordered `posts` (e.g. a project page ordering its series by number). */
+  sortByDate?: boolean;
 }
 
-const { posts } = Astro.props;
+const { posts, sortByDate = true } = Astro.props;
 
-const sorted = [...posts]
-  .filter((p) => !p.data.draft)
-  .sort(
+const sorted = [...posts].filter((p) => !p.data.draft);
+if (sortByDate) {
+  sorted.sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.id.localeCompare(b.id),
   );
+}
 ---
 
 {
