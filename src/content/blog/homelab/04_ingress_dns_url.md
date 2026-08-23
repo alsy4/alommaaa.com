@@ -251,9 +251,6 @@ It fits with no room to spare, exactly as post 2 predicted. Adding Komga and
 Syncthing means either resource limits everywhere or a RAM upgrade, and
 realistically both.
 
-Prometheus scrapes the node fine via node-exporter, so I have the data — it just
-isn't reaching `kubectl top`. It's next on the list.
-
 Worth stating what this cost in absolute terms: two machines, roughly 15W
 combined, running continuously. The control plane overhead on the Pi is around
 400MB of the 2GB.

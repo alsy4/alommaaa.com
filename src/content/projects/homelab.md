@@ -20,8 +20,4 @@ It started as two independent Docker hosts glued together with Portainer agents
 and hardcoded IPs. It is now a two-node k3s cluster with piloma as the control
 plane and alomalab as the worker.
 
-The running joke of this project is that the entire "cluster" has 3.5GB of RAM
-between both machines, which is less than a single browser tab, and it still
-serves media to the whole house.
-
 Both of this cluster has a sum of 4GB RAM which is less than a single tab of a chromium-based browser and it still can serve up to 2k of media to the whole house.
